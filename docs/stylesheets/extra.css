@@ -1,0 +1,3 @@
+.max-height-code-block pre > code{
+    max-height: 20rem;
+}
