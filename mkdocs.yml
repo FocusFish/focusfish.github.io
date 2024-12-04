@@ -1,15 +1,20 @@
 site_name: UVMS documentation
 site_url: https://focusfish.github.io/
 plugins:
-  - search
+  - macros
   - mike
+  - search
 extra:
   version:
     provider: mike
+    alias: true
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/FocusFish
       name: Source on GitHub
+  uvms_version: 4.3.2
+extra_css:
+  - stylesheets/extra.css
 markdown_extensions:
   - admonition
   - attr_list
@@ -21,7 +26,6 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  - pymdownx.superfences
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -30,15 +34,24 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - tables
+nav:
+  - Home: index.md
+  - Installation:
+    - installation/index.md
+    - Manual (recommended): installation/manual.md
+    - Docker: installation/docker.md
 theme:
   name: material
   features:
+    - content.code.annotate
     - content.code.copy
     - content.code.select
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
     - search.suggest
     - search.highlight
-    - navigation.indexes
-    - navigation.footer
   palette:
 
     # Palette toggle for automatic mode
