@@ -90,6 +90,11 @@ sudo make install
 sudo /sbin/ldconfig
 ```
 
+!!! warning
+    Security setup and hardening is not part of this how-to guide. The
+    following steps are focused on what UVMS needs, but does not e.g. set a
+    postgres password, open ports, etc.
+
 With an empty PostgreSQL it's now time to add a new database and the needed
 schemas and users.
 
