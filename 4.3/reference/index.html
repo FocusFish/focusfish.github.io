@@ -6,32 +6,32 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Contains installation instructions for a Docker based setup">
+        <meta name="description" content="Reference for UVMS modules and plugins">
       
       
       
-        <link rel="canonical" href="https://focusfish.github.io/4.3/installation/docker/">
+        <link rel="canonical" href="https://focusfish.github.io/4.3/reference/">
       
       
-        <link rel="prev" href="../manual/">
+        <link rel="prev" href="../configuration/">
       
       
-        <link rel="next" href="../../configuration/">
+        <link rel="next" href="audit/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.46">
     
     
       
-        <title>UVMS installation using Docker - UVMS documentation</title>
+        <title>Reference - UVMS documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -50,9 +50,9 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#docker" class="md-skip">
+        <a href="#reference" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="UVMS documentation" class="md-header__button md-logo" aria-label="UVMS documentation" data-md-component="logo">
+    <a href=".." title="UVMS documentation" class="md-header__button md-logo" aria-label="UVMS documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              UVMS installation using Docker
+              Reference
             
           </span>
         </div>
@@ -231,7 +231,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="UVMS documentation" class="md-nav__button md-logo" aria-label="UVMS documentation" data-md-component="logo">
+    <a href=".." title="UVMS documentation" class="md-nav__button md-logo" aria-label="UVMS documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -249,7 +249,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -266,8 +266,6 @@
       
   
   
-    
-  
   
   
     
@@ -284,16 +282,16 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../installation/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -310,7 +308,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Install UVMS
@@ -326,7 +324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../manual/" class="md-nav__link">
+      <a href="../installation/manual/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -344,30 +342,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Docker
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../installation/docker/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -376,92 +354,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#docker-compose" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker-compose
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Docker-compose">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stop-and-clean-up" class="md-nav__link">
-    <span class="md-ellipsis">
-      Stop and clean up
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#build-uvms-images-from-the-umvs-docker-repo" class="md-nav__link">
-    <span class="md-ellipsis">
-      Build UVMS images from the UMVS-Docker repo
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Build UVMS images from the UMVS-Docker repo">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stop-and-clean-up_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Stop and clean up
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -481,7 +373,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configuration/" class="md-nav__link">
+      <a href="../configuration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -498,6 +390,8 @@
       
   
   
+    
+  
   
   
     
@@ -528,16 +422,16 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../reference/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   <span class="md-ellipsis">
@@ -548,13 +442,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link md-nav__link--active" for="__nav_4" id="__nav_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Reference
@@ -570,7 +464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/audit/" class="md-nav__link">
+      <a href="audit/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -591,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/asset/" class="md-nav__link">
+      <a href="asset/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -612,7 +506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/config/" class="md-nav__link">
+      <a href="config/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -633,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/exchange/" class="md-nav__link">
+      <a href="exchange/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -654,7 +548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/incident/" class="md-nav__link">
+      <a href="incident/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -675,7 +569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/movement/" class="md-nav__link">
+      <a href="movement/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -696,7 +590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/movement-rules/" class="md-nav__link">
+      <a href="movement-rules/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -717,7 +611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/spatial/" class="md-nav__link">
+      <a href="spatial/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -738,7 +632,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/web-gateway/" class="md-nav__link">
+      <a href="web-gateway/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -779,80 +673,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#docker-compose" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker-compose
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Docker-compose">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stop-and-clean-up" class="md-nav__link">
-    <span class="md-ellipsis">
-      Stop and clean up
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#build-uvms-images-from-the-umvs-docker-repo" class="md-nav__link">
-    <span class="md-ellipsis">
-      Build UVMS images from the UMVS-Docker repo
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Build UVMS images from the UMVS-Docker repo">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stop-and-clean-up_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Stop and clean up
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -866,162 +686,9 @@
                   
 
 
-<h1 id="docker">Docker</h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The Docker based setup is not recommended for production use</p>
-</div>
-<p>There are two ways to test a Docker based setup;
-<a href="#docker-compose">docker-compose</a> and
-<a href="#build-uvms-images-from-the-umvs-docker-repo">Maven fabric8 Docker</a> plugin. The
-latter is intended for development usage, but can be an option if there's a
-strong preference for building the images from scratch.</p>
-<p>After installation the following will be running. (<em>Volumes are not strictly
-necessary, see Ephemeral tip</em>)</p>
-<pre class="mermaid"><code>architecture-beta
-    group host(server)[Host]
-    group docker(cloud)[Docker] in host
-
-    group wf(cloud)[Wildfly container] in docker
-    service wildfly(server)[Wildfly] in wf
-
-    group postgres(cloud)[PostgreSQL container] in docker
-    service db(database)[Database] in postgres
-
-    db:L -- R:wildfly
-    service disk2(disk)[Volume] in host
-    disk2:T -- B:wildfly
-    service disk1(disk)[Volume] in host
-    disk1:T -- B:db</code></pre>
-<p>With the exception of JMS for the <code>docker-compose</code> option, the following table
-of port mappings apply:</p>
-<table>
-<thead>
-<tr>
-<th>Service</th>
-<th>What</th>
-<th>Port (host:container)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Wildfly</td>
-<td>Management GUI</td>
-<td>29990:9990</td>
-</tr>
-<tr>
-<td></td>
-<td>HTTP</td>
-<td>28080:8080</td>
-</tr>
-<tr>
-<td></td>
-<td>HTTPS</td>
-<td>28443:8443</td>
-</tr>
-<tr>
-<td></td>
-<td>JMS</td>
-<td>5445:5445</td>
-</tr>
-<tr>
-<td></td>
-<td>JMS</td>
-<td>5455:5455</td>
-</tr>
-<tr>
-<td>PostgreSQL</td>
-<td></td>
-<td>25432:5432</td>
-</tr>
-</tbody>
-</table>
-<h2 id="docker-compose">Docker-compose</h2>
-<div class="admonition note">
-<p class="admonition-title">Prerequisites</p>
-<ul>
-<li>Docker installed</li>
-<li>docker-compose installed</li>
-</ul>
-</div>
-<h3 id="install">Install</h3>
-<details class="tip">
-<summary>Ephemeral mode</summary>
-<p>To run in an "ephemeral" mode the <code>volumes</code> part in
-<code>docker-compose-4.3.2.yml</code> can be removed.</p>
-<div class="language-diff highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>11,13d10
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="gd">&lt;     volumes:</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="gd">&lt;       - /app/logs:/app/logs</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="gd">&lt;       - /opt/jboss/wildfly/standalone/log:/opt/jboss/wildfly/standalone/log</span>
-</span></code></pre></div>
-</details>
-<div class="language-bash highlight"><span class="filename">Download and start UVMS stack through docker-compose</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>wget<span class="w"> </span>https://repo1.maven.org/maven2/fish/focus/uvms/docker/docker-compose/4.3.2/docker-compose-4.3.2.yml
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker-compose<span class="w"> </span>-f<span class="w"> </span>./docker-compose-4.3.2.yml<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span><span class="c1"># (1)</span>
-</span></code></pre></div>
-<ol>
-<li><code>-f</code> flag points to the yaml file downloaded in the step above. <code>-d</code> for
-   detach mode, i.e. the containers will continue running in the background.</li>
-</ol>
-<p>Wait for the Docker images to be downloaded and the containers then to start up
-and finally for Wildfly to load and start all of the UVMS modules.</p>
-<ol>
-<li>
-<p>Run
-    <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker-compose<span class="w"> </span>-f<span class="w"> </span>./docker-compose-4.3.2.yml<span class="w"> </span>logs<span class="w"> </span>-f
-</span></code></pre></div></p>
-<p>Look for something similar to <code>WildFly Full 26.0.0.Final (WildFly Core
-18.0.0.Final) started in 12345ms</code> in the logs</p>
-</li>
-<li>
-<p>Access the GUI at <a href="http://localhost:28080">http://localhost:28080</a>,
-   credentials: <code>vms_admin_com</code>/<code>password</code></p>
-</li>
-</ol>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Using <code>docker-compose up</code> always starts the system from a clean slate. This
-means that any data in the database is lost if the command is used after the
-first start.</p>
-<p>Use <code>docker-compose stop</code> and <code>docker-compose start</code> to stop and start an
-already running system</p>
-</div>
-<h3 id="stop-and-clean-up">Stop and clean up</h3>
-<p>Once done the UVMS stack can be cleaned up with:</p>
-<div class="language-bash highlight"><span class="filename">Clean up UVMS stack</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker-compose<span class="w"> </span>-f<span class="w"> </span>./docker-compose-4.3.2.yml<span class="w"> </span>down<span class="w"> </span>--volumes<span class="w"> </span><span class="c1"># (1)</span>
-</span></code></pre></div>
-<ol>
-<li>By default, named volumes in your compose file are not removed when you run
-   <code>docker-compose down</code>. If you want to remove the volumes, you need to add the
-   <code>--volumes</code> flag.</li>
-</ol>
-<h2 id="build-uvms-images-from-the-umvs-docker-repo">Build UVMS images from the UMVS-Docker repo</h2>
-<div class="admonition note">
-<p class="admonition-title">Prerequisites</p>
-<ul>
-<li>Docker installed</li>
-<li>Java 11</li>
-<li>Maven</li>
-</ul>
-</div>
-<h3 id="install_1">Install</h3>
-<ol>
-<li><code>git</code> clone repo: <a href="https://github.com/FocusFish/UVMS-Docker">UVMS-Docker</a></li>
-<li>Then run
-    <div class="language-bash highlight"><span class="filename">Build all Docker images and start an empty UVMS instance</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>UVMS-Docker<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="o">&amp;&amp;</span><span class="w"> </span>mvn<span class="w"> </span>clean<span class="w"> </span>install<span class="w"> </span>-Pdocker<span class="w"> </span>-DskipITs<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>unionvms-test<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="o">&amp;&amp;</span><span class="w"> </span>mvn<span class="w"> </span>docker:start<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
-</span></code></pre></div></li>
-<li>With a <code>BUILD SUCCESS</code> from the above step the Docker containers should now
-   be up and running. Verify with: <code>docker ps</code></li>
-<li>Access the GUI at <a href="http://localhost:28080">http://localhost:28080</a>,
-   credentials: <code>vms_admin_com</code>/<code>password</code></li>
-</ol>
-<h3 id="stop-and-clean-up_1">Stop and clean up</h3>
-<div class="language-bash highlight"><span class="filename">Stop Docker containers and clean up</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>stop<span class="w"> </span>postgres-release-1<span class="w"> </span>wildfly-unionvms-1<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-f<span class="w"> </span>--volumes
-</span></code></pre></div>
+<h1 id="reference">Reference</h1>
+<p>Contains reference material for UVMS modules and plugins. The sections should
+cover what the module/plugin does and what configuration options are available.</p>
 
 
 
@@ -1054,7 +721,7 @@ already running system</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../manual/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Manual (recommended)">
+          <a href="../configuration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configure UVMS">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1064,20 +731,20 @@ already running system</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Manual (recommended)
+                Configure UVMS
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../configuration/" class="md-footer__link md-footer__link--next" aria-label="Next: Configure UVMS">
+          <a href="audit/" class="md-footer__link md-footer__link--next" aria-label="Next: Audit">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Configure UVMS
+                Audit
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1125,10 +792,10 @@ already running system</p>
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.code.select", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.code.copy", "content.code.select", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
       
     
   </body>
