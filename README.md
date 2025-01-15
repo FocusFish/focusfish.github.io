@@ -7,6 +7,25 @@ Contains documentation for UVMS produced by [mkdocs material](https://squidfunk.
 See [getting started](https://squidfunk.github.io/mkdocs-material/getting-started/)
 for setup steps. Either install mkdocs-material through pip or run it with Docker.
 
+### Docker based
+
+The image `squidfunk/mkdocs-material` comes with some packages pre-installed,
+but lacks e.g. mike (versioning). The Dockerfile in this repo installs those
+missing packages (see requirements.txt).
+
+```
+# Build the image
+docker build -t focusfish/mkdocs-material:9.5.49.1 .
+
+# Run the container, the default command is `mkdocs serve`
+docker run --rm -it -p 8000:8000 -v ${PWD}:/docs focusfish/mkdocs-material:9.5.49.1
+```
+
+After starting the container (`docker run ...`) the documentation is available
+at `http://localhost:8000/`.
+
+### Non-Docker based
+
 It's recommended to use a virtual environment for non-Docker based setups. For
 example, on Ubuntu:
 
