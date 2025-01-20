@@ -15,3 +15,11 @@ updates:
     open-pull-requests-limit: 10
     reviewers:
       - "FocusFish/uvmsdevs"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "FocusFish/uvmsdevs"

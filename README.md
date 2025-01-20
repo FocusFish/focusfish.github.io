@@ -11,14 +11,12 @@ for setup steps. Either install mkdocs-material through pip or run it with Docke
 
 The image `squidfunk/mkdocs-material` comes with some packages pre-installed,
 but lacks e.g. mike (versioning). The Dockerfile in this repo installs those
-missing packages (see requirements.txt).
+missing packages (see requirements.txt) and is available at [Docker
+hub](https://hub.docker.com/r/uvms/mkdocs-material).
 
 ```
-# Build the image
-docker build -t focusfish/mkdocs-material:9.5.49.1 .
-
 # Run the container, the default command is `mkdocs serve`
-docker run --rm -it -p 8000:8000 -v ${PWD}:/docs focusfish/mkdocs-material:9.5.49.1
+docker run --rm -it -p 8000:8000 -v ${PWD}:/docs docker.io/uvms/mkdocs-material:latest
 ```
 
 After starting the container (`docker run ...`) the documentation is available
