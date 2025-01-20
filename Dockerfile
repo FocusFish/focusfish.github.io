@@ -1,4 +1,4 @@
-FROM squidfunk/mkdocs-material:9.5.49
+FROM squidfunk/mkdocs-material:9.5.50
 
 COPY start.sh /usr/local/bin/
 
