@@ -1,0 +1,99 @@
+# If triggered automatically => build and publish with dev tag
+# If triggered manually => build and publish supplied version
+
+name: Build documentation
+on:
+  push:
+    branches: [ main ]
+    paths-ignore: ["Dockerfile", "start.sh"]
+  pull_request:
+    branches: [ main ]
+    paths-ignore: ["Dockerfile", "start.sh"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The version tag for the documentation. Should follow latest released version.'
+        required: true
+        type: string
+
+jobs:
+  build-documentation:
+    runs-on: ubuntu-latest
+    permissions:
+      # for publishing changes
+      contents: write
+    steps:
+      - name: Checkout repository
+        if: github.event_name != 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+
+      - name: Set version and documentation aliases
+        id: set-doc-aliases
+        if: github.event_name != 'workflow_dispatch'
+        run: |
+          echo "UVMS_FULL_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
+          echo "UVMS_VERSION_AND_ALIASES=dev" >> $GITHUB_ENV
+
+      - name: Set manual version and documentation aliases
+        id: set-manul-doc-aliases
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          export FULL_VERSION=$(./getVersion.sh)
+          export VERSION_WITHOUT_PATCH_PART=$(echo "$FULL_VERSION" | grep -Po '(\d+\.\d+)')
+          echo "UVMS_FULL_VERSION=$FULL_VERSION" >> $GITHUB_ENV
+          echo "UVMS_VERSION_AND_ALIASES=$VERSION_WITHOUT_PATCH_PART latest dev" >> $GITHUB_ENV
+
+      - name: Update versions
+        id: update-version
+        if: github.event_name != 'pull_request'
+        env:
+          FULL_VERSION: ${{ env.UVMS_FULL_VERSION }}
+        run: |
+          ./updateVersion.sh uvms_version ${FULL_VERSION} mkdocs.yml
+          git config user.name uvmsci
+          git config user.email uvmsci@gmail.com
+          git add mkdocs.yml
+          git commit -am "docs: updates to version ${FULL_VERSION} in mkdocs.yml"
+
+      - name: Build documentation
+        id: build-with-mkdocs
+        if: github.event_name == 'pull_request'
+        uses: addnab/docker-run-action@4f65fabd2431ebc8d299f8e5a018d79a769ae185 # v3
+        with:
+          registry: docker.io
+          image: uvms/mkdocs-material:9.5.50.2
+          options: -v ${{ github.workspace }}:/docs -w /docs
+          run: |
+            mkdocs build
+
+      - name: Build documentation
+        id: build-with-mike
+        if: github.event_name != 'pull_request'
+        uses: docker://docker.io/uvms/mkdocs-material:9.5.50.2
+        env:
+          VERSION_AND_ALIASES: ${{ env.UVMS_VERSION_AND_ALIASES }}
+        uses: addnab/docker-run-action@4f65fabd2431ebc8d299f8e5a018d79a769ae185 # v3
+        with:
+          registry: docker.io
+          image: uvms/mkdocs-material:9.5.50.2
+          options: -v ${{ github.workspace }}:/docs -w /docs
+          run: |
+            mike deploy -u $VERSION_AND_ALIASES
+
+      - name: Publish documentation
+        id: publish-documentation
+        if: github.event_name != 'pull_request'
+        env:
+          VERSION: ${{ env.UVMS_FULL_VERSION }}
+        run: |
+          git tag -f -a "${VERSION}" -m "docs: release ${VERSION} of documentation"
+          git push origin ${VERSION}
+          git push origin HEAD
+          git checkout gh-pages
+          git push origin HEAD
+
