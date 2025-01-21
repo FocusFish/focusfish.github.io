@@ -101,6 +101,8 @@ jobs:
         env:
           VERSION: ${{ env.UVMS_IMAGE_VERSION }}
         run: |
+          git config user.name uvmsci
+          git config user.email uvmsci@gmail.com
           git tag -f -a "${VERSION}" -m "Release ${VERSION} of documentation image"
           git push origin ${VERSION}
 
