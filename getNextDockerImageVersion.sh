@@ -14,7 +14,7 @@ print_version () {
     echo -n "$dockerfile_version.${1:-1}"
 }
 
-latest_tag=$(git describe --tags --match="docker-image-*" --abbrev=0 HEAD 2>&1)
+latest_tag=$(git describe --tags --match="docker-image-*" --abbrev=0 HEAD | sed 's/docker-image-//' 2>&1)
 
 dockerfile_version=$(grep -m 1 -o ':.*' $SCRIPTPATH/Dockerfile | tr -d ':')
 
