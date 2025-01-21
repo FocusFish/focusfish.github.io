@@ -7,3 +7,4 @@ if [[ "$1" == "mike" && "$2" == "serve" ]]; then
 fi
 
 exec "$@"
+
