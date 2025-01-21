@@ -102,9 +102,10 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         env:
           VERSION: ${{ env.UVMS_IMAGE_VERSION }}
+          TAG: docker-image-${{ env.UVMS_IMAGE_VERSION }}
         run: |
           git config user.name uvmsci
           git config user.email uvmsci@gmail.com
-          git tag -f -a "docker-image-${VERSION}" -m "Release ${VERSION} of documentation image"
-          git push origin ${VERSION}
+          git tag -f -a "${TAG}" -m "Release ${VERSION} of documentation image"
+          git push origin ${TAG}
 
