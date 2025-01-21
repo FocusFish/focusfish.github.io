@@ -102,6 +102,6 @@ jobs:
         run: |
           git config user.name uvmsci
           git config user.email uvmsci@gmail.com
-          git tag -f -a "${VERSION}" -m "Release ${VERSION} of documentation image"
+          git tag -f -a "docker-image-${VERSION}" -m "Release ${VERSION} of documentation image"
           git push origin ${VERSION}
 
