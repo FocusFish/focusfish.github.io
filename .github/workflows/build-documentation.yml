@@ -58,7 +58,9 @@ jobs:
           git config user.name uvmsci
           git config user.email uvmsci@gmail.com
           git add mkdocs.yml
-          git commit -am "docs: updates to version ${FULL_VERSION} in mkdocs.yml"
+          [ -n "$(git status --porcelain)" ] && \
+            git commit -am "docs: updates to version ${FULL_VERSION} in mkdocs.yml" || \
+            echo "Building the same version again"
 
       - name: Build documentation
         id: build-with-mkdocs
