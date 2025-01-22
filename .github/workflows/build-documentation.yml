@@ -47,7 +47,7 @@ jobs:
           export VERSION_WITHOUT_PATCH_PART=$(echo "$FULL_VERSION" | grep -Po '(\d+\.\d+)' | head -n1)
           echo "UVMS_GIT_TAG=$(./getNextVersion.sh uvms $FULL_VERSION)" >> $GITHUB_ENV
           echo "UVMS_FULL_VERSION=$FULL_VERSION" >> $GITHUB_ENV
-          echo "UVMS_VERSION_AND_ALIASES=$VERSION_WITHOUT_PATCH_PART latest dev" >> $GITHUB_ENV
+          echo "UVMS_VERSION_AND_ALIASES=$VERSION_WITHOUT_PATCH_PART latest" >> $GITHUB_ENV
 
       - name: Update versions
         id: update-version
