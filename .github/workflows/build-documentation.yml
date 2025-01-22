@@ -44,7 +44,8 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         run: |
           export FULL_VERSION=${{ inputs.version }}
-          export VERSION_WITHOUT_PATCH_PART=$(echo "$FULL_VERSION" | grep -Po '(\d+\.\d+)')
+          export VERSION_WITHOUT_PATCH_PART=$(echo "$FULL_VERSION" | grep -Po '(\d+\.\d+)' | head -n1)
+          echo "UVMS_GIT_TAG=$(./getNextVersion.sh uvms $FULL_VERSION)" >> $GITHUB_ENV
           echo "UVMS_FULL_VERSION=$FULL_VERSION" >> $GITHUB_ENV
           echo "UVMS_VERSION_AND_ALIASES=$VERSION_WITHOUT_PATCH_PART latest dev" >> $GITHUB_ENV
 
@@ -84,14 +85,19 @@ jobs:
           run: |
             mike deploy -u ${{ env.UVMS_VERSION_AND_ALIASES }}
 
+      - name: Tag release
+        id: tag-release
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          TAG: ${{ env.UVMS_GIT_TAG }}
+        run: |
+          git tag -f -a "${TAG}" -m "docs: release ${TAG} of documentation"
+          git push origin ${VERSION}
+
       - name: Publish documentation
         id: publish-documentation
         if: github.event_name != 'pull_request'
-        env:
-          VERSION: ${{ env.UVMS_FULL_VERSION }}
         run: |
-          git tag -f -a "${VERSION}" -m "docs: release ${VERSION} of documentation"
-          git push origin ${VERSION}
           git push origin HEAD
           git checkout gh-pages
           git push origin HEAD
