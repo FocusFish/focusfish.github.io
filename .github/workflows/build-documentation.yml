@@ -74,15 +74,13 @@ jobs:
       - name: Build documentation
         id: build-with-mike
         if: github.event_name != 'pull_request'
-        env:
-          VERSION_AND_ALIASES: ${{ env.UVMS_VERSION_AND_ALIASES }}
         uses: addnab/docker-run-action@4f65fabd2431ebc8d299f8e5a018d79a769ae185 # v3
         with:
           registry: docker.io
           image: uvms/mkdocs-material:9.5.50.2
           options: -v ${{ github.workspace }}:/docs -w /docs
           run: |
-            mike deploy -u $VERSION_AND_ALIASES
+            mike deploy -u ${{ env.UVMS_VERSION_AND_ALIASES }}
 
       - name: Publish documentation
         id: publish-documentation
