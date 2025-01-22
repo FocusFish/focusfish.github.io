@@ -36,14 +36,14 @@ jobs:
         id: set-doc-aliases
         if: github.event_name != 'workflow_dispatch'
         run: |
-          echo "UVMS_FULL_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
+          echo "UVMS_FULL_VERSION=$(./getVersion.sh)" >> $GITHUB_ENV
           echo "UVMS_VERSION_AND_ALIASES=dev" >> $GITHUB_ENV
 
       - name: Set manual version and documentation aliases
         id: set-manul-doc-aliases
         if: github.event_name == 'workflow_dispatch'
         run: |
-          export FULL_VERSION=$(./getVersion.sh)
+          export FULL_VERSION=${{ inputs.version }}
           export VERSION_WITHOUT_PATCH_PART=$(echo "$FULL_VERSION" | grep -Po '(\d+\.\d+)')
           echo "UVMS_FULL_VERSION=$FULL_VERSION" >> $GITHUB_ENV
           echo "UVMS_VERSION_AND_ALIASES=$VERSION_WITHOUT_PATCH_PART latest dev" >> $GITHUB_ENV
