@@ -47,8 +47,13 @@ mkdocs serve
 
 With the [macros](https://mkdocs-macros-plugin.readthedocs.io/en/latest/)
 plugin the markdown files are run through a jinja2 templating engine. To
-include a template variable add it under `extra` in `mkdocs.yml` and then
-reference it in the markdown file like `{{ my_variable }}`.
+include a template variable:
+
+1. add it under `extra` in `mkdocs.yml` and then reference it in the markdown
+   file like `{{ my_variable }}`
+1. if the variable needs to be updated automatically, update
+   `.github/workflows/build-documentation.yml` step `Update versions` to
+   include the new template variable
 
 ## Versioning
 
@@ -68,8 +73,16 @@ is better suited since it doesn't involve running `mike deploy ...` first.
 
 ## Publising
 
-All publishing is done through a CI job and no manual intervention should be
-needed. The CI job will run `mike deploy ...` which will build the
-documentation and create a new commit in the `gh_pages`. Upon push the new
-documentation will be available at:
+All publishing is done through the CI job
+`.github/workflows/build-documentation.yml` (GitHub actions). On PR the
+documentation is built with `mkdocs build` to verify that it can be built. Once
+merged to main the job will build (`mike deploy ...`) and publish a new version
+to [dev](https://focusfish.github.io/dev/).
+
+To create a release, the job needs to be manually started
+(`GitHub Actions tab->Build documentation->Run workflow`).
+The version should be the latest released UVMS version (e.g. 4.3.4).
+
+Upon completion the new version of the documentation will be available at:
 [focusfish.github.io](https://focusfish.github.io/).
+
