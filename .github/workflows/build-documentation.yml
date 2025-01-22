@@ -32,6 +32,12 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v4
 
+      - name: Print info
+        run: |
+          id
+          ls -la
+          env
+
       - name: Set version and documentation aliases
         id: set-doc-aliases
         if: github.event_name != 'workflow_dispatch'
