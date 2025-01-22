@@ -57,7 +57,7 @@ jobs:
       - name: Get next Docker image version
         id: get-next-version
         run: |
-          echo "UVMS_IMAGE_VERSION=$(./getNextDockerImageVersion.sh)" >> $GITHUB_ENV
+          echo "UVMS_IMAGE_VERSION=$(./getNextVersion.sh docker)" >> $GITHUB_ENV
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
