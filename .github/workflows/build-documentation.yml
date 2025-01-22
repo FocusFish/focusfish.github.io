@@ -93,7 +93,7 @@ jobs:
           TAG: ${{ env.UVMS_GIT_TAG }}
         run: |
           git tag -f -a "${TAG}" -m "docs: release ${TAG} of documentation"
-          git push origin ${VERSION}
+          git push origin ${TAG}
 
       - name: Publish documentation
         id: publish-documentation
