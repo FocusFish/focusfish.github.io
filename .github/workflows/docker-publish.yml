@@ -114,7 +114,7 @@ jobs:
         env:
           VERSION: ${{ env.UVMS_IMAGE_VERSION }}
         run: |
-          ./updateVersion.sh container "docker.io/uvms/mkdocs-material:${VERSION}" ".github/workflows/build-documentation.yml"
+          ./updateVersion.sh image "uvms/mkdocs-material:${VERSION}" ".github/workflows/build-documentation.yml"
           git add ".github/workflows/build-documentation.yml"
           git commit -am "ci: updates container version to ${VERSION}"
           git push origin HEAD
