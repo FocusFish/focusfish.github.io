@@ -17,8 +17,6 @@ jobs:
 
     runs-on: ubuntu-latest
     permissions:
-      actions: write
-      # for git tag
       contents: write
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
@@ -109,14 +107,4 @@ jobs:
           git config user.email uvmsci@gmail.com
           git tag -f -a "${TAG}" -m "build: release ${VERSION} of documentation image"
           git push origin ${TAG}
-
-      - name: Update ci image version
-        if: ${{ github.event_name != 'pull_request' }}
-        env:
-          VERSION: ${{ env.UVMS_IMAGE_VERSION }}
-        run: |
-          ./updateVersion.sh image "uvms/mkdocs-material:${VERSION}" ".github/workflows/build-documentation.yml"
-          git add ".github/workflows/build-documentation.yml"
-          git commit -am "ci: updates container version to ${VERSION}"
-          git push origin HEAD
 
