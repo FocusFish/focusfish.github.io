@@ -32,10 +32,14 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v4
 
+      - name: Fetch all tags
+        run: git fetch --depth=1 --tags
+
       - name: Set version and documentation aliases
         id: set-doc-aliases
         if: github.event_name != 'workflow_dispatch'
         run: |
+          echo "UVMS_MKDOCS_IMAGE_VERSION=$(git tag -l --sort=-taggerdate 'docker-image-*' | head -n1 | sed 's/docker-image-//' 2>&1)" >> $GITHUB_ENV
           echo "UVMS_FULL_VERSION=$(./getVersion.sh)" >> $GITHUB_ENV
           echo "UVMS_VERSION_AND_ALIASES=dev" >> $GITHUB_ENV
 
@@ -45,6 +49,7 @@ jobs:
         run: |
           export FULL_VERSION=${{ inputs.version }}
           export VERSION_WITHOUT_PATCH_PART=$(echo "$FULL_VERSION" | grep -Po '(\d+\.\d+)' | head -n1)
+          echo "UVMS_MKDOCS_IMAGE_VERSION=$(git tag -l --sort=-taggerdate 'docker-image-*' | head -n1 | sed 's/docker-image-//' 2>&1)" >> $GITHUB_ENV
           echo "UVMS_GIT_TAG=$(./getNextVersion.sh uvms $FULL_VERSION)" >> $GITHUB_ENV
           echo "UVMS_FULL_VERSION=$FULL_VERSION" >> $GITHUB_ENV
           echo "UVMS_VERSION_AND_ALIASES=$VERSION_WITHOUT_PATCH_PART latest" >> $GITHUB_ENV
@@ -69,7 +74,7 @@ jobs:
         uses: addnab/docker-run-action@4f65fabd2431ebc8d299f8e5a018d79a769ae185 # v3
         with:
           registry: docker.io
-          image: uvms/mkdocs-material:9.5.50.3
+          image: uvms/mkdocs-material:${{ env.UVMS_MKDOCS_IMAGE_VERSION }}
           options: -v ${{ github.workspace }}:/docs -w /docs
           run: |
             mkdocs build
@@ -80,7 +85,7 @@ jobs:
         uses: addnab/docker-run-action@4f65fabd2431ebc8d299f8e5a018d79a769ae185 # v3
         with:
           registry: docker.io
-          image: uvms/mkdocs-material:9.5.50.3
+          image: uvms/mkdocs-material:${{ env.UVMS_MKDOCS_IMAGE_VERSION }}
           options: -v ${{ github.workspace }}:/docs -w /docs
           run: |
             mike deploy -u ${{ env.UVMS_VERSION_AND_ALIASES }}
