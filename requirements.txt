@@ -32,7 +32,7 @@ regex==2024.11.6
 requests==2.32.3
 six==1.17.0
 super_collections==0.5.3
-termcolor==2.5.0
+termcolor==3.0.1
 urllib3==2.3.0
 verspec==0.1.0
 watchdog==6.0.0
