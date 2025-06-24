@@ -55,6 +55,9 @@ nav:
     - Movement-Rules: reference/movement-rules.md
     - Spatial: reference/spatial.md
     - Web Gateway: reference/web-gateway.md
+  - Topics:
+    - topics/index.md
+    - Assets: topics/assets.md
 theme:
   name: material
   features:
