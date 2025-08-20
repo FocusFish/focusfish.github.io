@@ -1,0 +1,397 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>se.havochvatten.unionvms</groupId>
+    <artifactId>wildfly-dist</artifactId>
+    <version>${unionvms.docker.version}</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <unionvms.wildfly.version>26.0.0.Final</unionvms.wildfly.version>
+        <unionvms.docker.version>4.3.2</unionvms.docker.version>
+        <unionvms.activemq-rar.version>5.16.3</unionvms.activemq-rar.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-dist</artifactId>
+            <version>${unionvms.wildfly.version}</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>fish.focus.uvms.docker</groupId>
+            <artifactId>uvms-docker-postgres-release</artifactId>
+            <version>${unionvms.docker.version}</version>
+            <type>zip</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.oracle</groupId>
+                    <artifactId>ojdbc6</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>fish.focus.uvms.docker</groupId>
+            <artifactId>uvms-docker-wildfly-base</artifactId>
+            <version>${unionvms.docker.version}</version>
+            <type>zip</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-spatial</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.postgis</groupId>
+                    <artifactId>postgis-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>fish.focus.uvms.docker</groupId>
+            <artifactId>uvms-docker-wildfly-unionvms</artifactId>
+            <version>${unionvms.docker.version}</version>
+            <type>zip</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.ant</groupId>
+                            <artifactId>ant-jsch</artifactId>
+                            <version>1.10.1</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.jcraft</groupId>
+                            <artifactId>jsch</artifactId>
+                            <version>0.1.54</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>ant-contrib</groupId>
+                            <artifactId>ant-contrib</artifactId>
+                            <version>1.0b3</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>ant</groupId>
+                                    <artifactId>ant</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.liquibase</groupId>
+                    <artifactId>liquibase-maven-plugin</artifactId>
+                    <version>3.7.0</version>
+                    <configuration>
+                        <url>jdbc:postgresql://${unionvms.database.host}:5432/${unionvms.database.name}</url>
+                        <tag>${unionvms.docker.version}</tag>
+                        <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <version>42.3.9</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>unpack-dependencies</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <copyPom>false</copyPom>
+                            <outputDirectory>${project.basedir}/target/content</outputDirectory>
+                            <excludeTypes>pom</excludeTypes>
+                            <prependGroupId>false</prependGroupId>
+                            <excludeTransitive>true</excludeTransitive>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-ears</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.apache.activemq</groupId>
+                                    <artifactId>activemq-rar</artifactId>
+                                    <type>rar</type>
+                                    <version>${unionvms.activemq-rar.version}</version>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${project.build.directory}/addons/</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-liquibase</id>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <tasks>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.asset.liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/asset"/>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.audit.liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/audit"/>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.config.liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/config"/>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.exchange.liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/exchange"/>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.movement-rules.liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/movement-rules"/>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.movement.liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/movement"/>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.reporting.reporting-liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/reporting"/>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.spatial.liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/spatial"/>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.user.liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/user"/>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.incident.liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/incident"/>
+                                <unzip src="${project.build.directory}/content/uvms-docker-postgres-release/liquibase/fish.focus.uvms.activity.liquibase.zip"
+                                       dest="${project.build.directory}/liquibase/activity"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.7.1</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/assembly.xml</descriptor>
+                    </descriptors>
+                    <finalName>${project.artifactId}-${project.version}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <goals>
+                    <goal>deploy-file</goal>
+                </goals>
+                <configuration>
+                    <packaging>zip</packaging>
+                    <generatePom>true</generatePom>
+                    <artifactId>${project.artifactId}</artifactId>
+                    <groupId>${project.groupId}</groupId>
+                    <version>${project.version}</version>
+                    <file>target/${project.artifactId}-${project.version}.zip</file>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>scp-stop-and-install-server</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>stop-scp</id>
+                                <phase>verify</phase>
+                                <configuration>
+                                    <target>
+                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+                                                 classpathref="maven.plugin.classpath"/>
+                                        <!-- 1. stop wildfly if any-->
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 failonerror="false" command="sudo systemctl stop wildfly.service"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 failonerror="false"
+                                                 command="sudo -u wildfly rm ${unionvms.symlink.wildfly}"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 failonerror="false"
+                                                 command="sudo -u wildfly rm -rf ${unionvms.install.path}/${project.artifactId}*"/>
+
+                                        <scp file="target/${project.artifactId}-${project.version}.zip"
+                                             todir="${scp.target.server.username}:${scp.target.server.password}@${scp.target.server.hostname}:/tmp"
+                                             trust="true"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly unzip /tmp/${project.artifactId}-${project.version}.zip -d ${unionvms.install.path}"/>
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo rm /tmp/${project.artifactId}-${project.version}.zip"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly chmod a+x ${unionvms.install.path}/${project.artifactId}-${project.version}/unionvms-database-scripts/*.sh"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly sed s/db71u/${unionvms.database.name}/g &lt; ${unionvms.install.path}/${project.artifactId}-${project.version}/unionvms-database-scripts/.pgpass &gt; ~/.pgpass; chmod 600 ~/.pgpass"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly sed -i -r s/-Xmx[0-9]\{4\}m/-Xmx12288m/g ${unionvms.install.path}/${project.artifactId}-${project.version}/bin/standalone.conf"/>
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly sed -i -r s/-XX:MetaspaceSize=[0-9]\{1,4\}[Mm]/-XX:MetaspaceSize=256m/g ${unionvms.install.path}/${project.artifactId}-${project.version}/bin/standalone.conf"/>
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly sed -i -r s/-XX:MaxMetaspaceSize=[0-9]\{1,4\}[Mm]/-XX:MaxMetaspaceSize=2048m/g ${unionvms.install.path}/${project.artifactId}-${project.version}/bin/standalone.conf"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly ln -s ${unionvms.install.path}/${project.artifactId}-${project.version} ${unionvms.symlink.wildfly}"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly ${unionvms.symlink.wildfly}/bin/add-user.sh -u '${wildfly.mgmt.console.username}' -p '${wildfly.mgmt.console.password}'"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly ${unionvms.symlink.wildfly}/bin/jboss-cli.sh --file=${unionvms.symlink.wildfly}/cli-scripts/uvms_configuration.cli --properties=${unionvms.symlink.wildfly}/cli-scripts/uvms.properties"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly ${unionvms.symlink.wildfly}/bin/jboss-cli.sh --file=${unionvms.symlink.wildfly}/cli-scripts/uvms_datasources.cli --properties=${unionvms.symlink.wildfly}/cli-scripts/uvms.properties"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo -u wildfly ${unionvms.symlink.wildfly}/bin/jboss-cli.sh --file=${unionvms.symlink.wildfly}/cli-scripts/uvms_messaging.cli --properties=${unionvms.symlink.wildfly}/cli-scripts/uvms.properties"/>
+
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>scp-start-server</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>scp-start</id>
+                                <phase>verify</phase>
+                                <configuration>
+                                    <target>
+                                        <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+                                                 classpathref="maven.plugin.classpath"/>
+
+                                        <sshexec host="${scp.target.server.hostname}"
+                                                 username="${scp.target.server.username}"
+                                                 password="${scp.target.server.password}" trust="true"
+                                                 command="sudo systemctl start wildfly.service"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>prod-server</id>
+            <properties>
+                <scp.target.server.hostname>SET_ME</scp.target.server.hostname>
+                <scp.target.server.username>OPTIONAL_SET_ME</scp.target.server.username>
+                <scp.target.server.password>OPTIONAL_SET_ME</scp.target.server.password>
+
+                <unionvms.install.path>/opt/wildfly</unionvms.install.path>
+                <unionvms.symlink.wildfly>/opt/wildfly/current</unionvms.symlink.wildfly>
+
+                <unionvms.database.name>SET_ME</unionvms.database.name>
+                <unionvms.database.host>SET_ME</unionvms.database.host>
+
+                <unionvms.database.username>OPTIONAL_SET_ME</unionvms.database.username>
+                <unionvms.database.password>OPTIONAL_SET_ME</unionvms.database.password>
+
+                <unionvms.database.asset.password>OPTIONAL_SET_ME</unionvms.database.asset.password>
+                <unionvms.database.audit.password>OPTIONAL_SET_ME</unionvms.database.audit.password>
+                <unionvms.database.config.password>OPTIONAL_SET_ME</unionvms.database.config.password>
+                <unionvms.database.movement.password>OPTIONAL_SET_ME</unionvms.database.movement.password>
+                <unionvms.database.movement.rules.password>OPTIONAL_SET_ME</unionvms.database.movement.rules.password>
+                <unionvms.database.exchange.password>OPTIONAL_SET_ME</unionvms.database.exchange.password>
+                <unionvms.database.reporting.password>OPTIONAL_SET_ME</unionvms.database.reporting.password>
+                <unionvms.database.spatial.password>OPTIONAL_SET_ME</unionvms.database.spatial.password>
+                <unionvms.database.usm.password>OPTIONAL_SET_ME</unionvms.database.usm.password>
+                <unionvms.database.incident.password>OPTIONAL_SET_ME</unionvms.database.incident.password>
+                <unionvms.database.activity.password>OPTIONAL_SET_ME</unionvms.database.activity.password>
+
+                <wildfly.mgmt.console.username>admin</wildfly.mgmt.console.username>
+                <wildfly.mgmt.console.password>OPTIONAL_SET_ME</wildfly.mgmt.console.password>
+
+                <unionvms.usm.secret.key>OPTIONAL_SET_ME</unionvms.usm.secret.key>
+            </properties>
+        </profile>
+    </profiles>
+</project>
