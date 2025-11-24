@@ -25,12 +25,12 @@ jobs:
     steps:
       - name: Checkout repository
         if: github.event_name != 'pull_request'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: gh-pages
 
       - name: Checkout main branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Fetch all tags
         run: git fetch --depth=1 --tags
