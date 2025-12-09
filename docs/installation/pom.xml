@@ -10,7 +10,7 @@
 
     <properties>
         <unionvms.wildfly.version>26.0.0.Final</unionvms.wildfly.version>
-        <unionvms.docker.version>4.3.2</unionvms.docker.version>
+        <unionvms.docker.version>4.6.4</unionvms.docker.version>
         <unionvms.activemq-rar.version>5.16.3</unionvms.activemq-rar.version>
     </properties>
 
