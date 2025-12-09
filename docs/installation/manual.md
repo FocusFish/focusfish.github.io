@@ -36,58 +36,13 @@ architecture-beta
 
 Versions:
 
-* `PostgreSQL 12`
-* `Postgis 2.5.3`
+* `PostgreSQL 17`
+* `Postgis 3.6.0`
 
-``` bash title="Install PostgreSQL with extensions"
-sudo zypper in postgresql-devel
-sudo zypper in gcc
-sudo zypper in gcc-c++
-sudo zypper in autoconf
-sudo zypper in automake
-sudo zypper in libtool
-sudo zypper in libxml2-devel
+``` bash title="Install PostgreSQL with PostGIS extension"
+sudo zypper in postgis36_17
 
-# Proj4:
-sudo zypper install sqlite3
-sudo zypper in sqlite3-devel
-sudo wget https://download.osgeo.org/proj/proj-6.2.0.tar.gz
-sudo tar -xvzf proj-6.2.0.tar.gz
-cd proj-6.2.0/
-sudo ./configure
-sudo make
-sudo make check
-sudo make install
-
-# GEOS:
-sudo wget https://git.osgeo.org/gitea/geos/geos/archive/3.7.3.tar.gz
-sudo tar -xvzf 3.7.3.tar.gz
-cd geos
-sudo ./autogen.sh
-sudo ./configure
-sudo make
-sudo make check
-sudo make install
-
-# GDAL:
-sudo wget http://download.osgeo.org/gdal/2.4.2/gdal-2.4.2.tar.gz
-sudo tar -xvzf gdal-2.4.2.tar.gz
-cd gdal-2.4.2
-sudo ./autogen.sh
-sudo ./configure
-sudo make
-sudo make install
-
-# sudo /sbin/ldconfig
-
-# PostGIS:
-sudo wget https://download.osgeo.org/postgis/source/postgis-2.5.3.tar.gz
-sudo tar -xvzf postgis-2.5.3.tar.gz
-sudo ./configure --with-geosconfig=/usr/local/bin/geos-config --with-gdalconfig=/usr/local/bin/gdal-config
-sudo make
-sudo make install
-
-sudo /sbin/ldconfig
+# for other OSes see: https://postgis.net/documentation/getting_started/
 ```
 
 !!! warning
