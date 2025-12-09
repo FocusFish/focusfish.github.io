@@ -12,7 +12,7 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/FocusFish
       name: Source on GitHub
-  uvms_version: 4.6.4
+  uvms_version: 4.5.0
 extra_css:
   - stylesheets/extra.css
 markdown_extensions:
